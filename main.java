@@ -1,14 +1,17 @@
-public class Main {
+package EventTicketBookingSystem;
+import java.util.Scanner;
+
+public class main {
     public static void main(String[] args) {
         EventBookingSystem system = new EventBookingSystem();
-        system.loadEvents();
+        system.loadEvents("events.dat");
 
         Scanner sc = new Scanner(System.in);
         int choice;
         do {
             System.out.println("\n1. Register Attendee\n2. Add Event\n3. Book Ticket\n4. Show Events\n5. Save & Exit");
             choice = sc.nextInt();
-            sc.nextLine(); // consume newline
+            sc.nextLine(); 
 
             switch (choice) {
                 case 1:
@@ -23,6 +26,7 @@ public class Main {
                     String title = sc.nextLine();
                     System.out.print("Enter Tickets: ");
                     int tickets = sc.nextInt();
+                    sc.nextLine();
                     system.addEvent(new Event(title, tickets));
                     break;
                 case 3:
@@ -30,7 +34,10 @@ public class Main {
                     String attId = sc.nextLine();
                     System.out.print("Enter Event Title to Book: ");
                     String evt = sc.nextLine();
-                    Attendee att = system.attendees.stream().filter(a -> a.id.equals(attId)).findFirst().orElse(null);
+                    Attendee att = system.getAttendees().stream()
+                        .filter(a -> a.id.equals(attId))
+                        .findFirst()
+                        .orElse(null);
                     if (att != null) {
                         try {
                             system.bookTicket(att, evt);
@@ -45,10 +52,14 @@ public class Main {
                     system.showEvents();
                     break;
                 case 5:
-                    system.saveEvents();
+                    system.saveEvents("events.dat");
                     System.out.println("Saved. Exiting...");
                     break;
+                default:
+                    System.out.println("Invalid choice.");
             }
         } while (choice != 5);
+
+        sc.close();
     }
 }
