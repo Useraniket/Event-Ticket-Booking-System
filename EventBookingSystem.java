@@ -1,8 +1,9 @@
 package EventTicketBookingSystem;
+
 import java.io.*;
 import java.util.*;
 
-class EventBookingSystem {
+public class EventBookingSystem {
     private List<Attendee> attendees;
     private List<Organizer> organizers;
     private List<Event> events;
@@ -56,7 +57,7 @@ class EventBookingSystem {
         }
         System.out.println("Available Events:");
         for (Event event : events) {
-            System.out.println("- " + event.getTitle() + " (" + event.getAvailableTickets() + " tickets available)");
+            System.out.println("- " + event);
         }
     }
 
@@ -82,5 +83,9 @@ class EventBookingSystem {
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error loading events: " + e.getMessage());
         }
+    }
+
+    public List<Attendee> getAttendees() {
+        return attendees;
     }
 }
